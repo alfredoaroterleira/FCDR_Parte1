@@ -1,0 +1,504 @@
+---
+title: "Fundamentos de ciencia de datos con R"
+author: "Alfredo Aro Terleira"
+---
+## Prefacio
+
+### Actualizar paquetes
+```{r}
+#update.packages(ask = FALSE)
+```
+
+```{r}
+#install.packages("xfun", type = "source", INSTALL_opts = "--no-lock")
+```
+
+```{r}
+packageVersion("xfun")
+```
+
+### Instalar el paquete "CDR"
+```{r}
+#install.packages("remotes")
+#remotes::install_github("cdr-book/CDR")
+```
+
+### Vemos la data
+```{r}
+library("CDR")
+data(package = "CDR")
+```
+
+```{r}
+data()
+```
+
+## **Capítulo 1: ¿Es la ciencia de datos una ciencia?**
+
+Balug (1985): “la ciencia se caracteriza por su método de formulación de proposiciones contrastables, y no por su contenido, ni por su pretensión de certeza en el conocimiento; si alguna certeza proporciona la ciencia, esta será más bien la certeza de la ignorancia.”
+
+Se habla de la importancia del método científico, como el camino mediante el cual las ciencias pueden llegar a encontrar sus respectivas verdades.
+
+El método científico ha de recorrerse siguiendo cuatro fases (Cancelo, 1997): (i) inventario previo de los fenómenos o de los hechos significativos no rutinarios; (ii) planteamiento de un tema problemático que hace necesaria una explicación; (iii) ideación de conjeturas tendentes a darla, y (iv) tratamiento de las diversas hipótesis hasta que solo una se mantenga.
+
+### *1.1. ¿Qué se entiende por ciencia de datos?*
+
+La ciencia de datos implica la limpieza, la agregación y la manipulación de datos recabados de la web, de teléfonos inteligentes, de clientes, de pacientes, de sensores o de encuestas, entre otras fuentes, para llevar a cabo un análisis de datos avanzado de los mismos, así como su modelización, para ayudar a detectar patrones, tendencias, comportamientos y, por tanto, facilitar la toma de decisiones.
+
+La ciencia de datos es, por tanto, una disciplina relativamente nueva que combina la estadística, las matemáticas, la informática y la programación, para obtener valor de los datos.
+
+## **Capítulo 2: Metodología de la Ciencia de Datos**
+
+### *2.1. Preliminares*
+
+Bunge (2018) destaca ocho operaciones en la aplicación de este:
+
+1. Enunciar preguntas bien formuladas y verosímilmente fecundas.
+
+2. Arbitrar conjeturas, fundadas y contrastables con la experiencia, para contestar las preguntas.
+
+3. Derivar consecuencias lógicas de las conjeturas.
+
+4. Arbitrar técnicas para someter las conjeturas a contraste.
+
+5. Someter a contraste esas técnicas para comprobar su relevancia y la validez que merecen.
+
+6. Llevar a cabo la contrastación e interpretar sus resultados.
+
+7. vEstimar la pretensión de verdad de las conjeturas y la fidelidad de las técnicas.
+
+8. Determinar los dominios en los cuales valen las conjeturas y las técnicas, y formular los nuevos problemas originados por la investigación.
+
+A su vez, sugiere una serie de reglas para la ejecución ordenada de las operaciones anteriores:
+
+1. Formular el problema con precisión y, al principio, específicamente.
+
+2. Proponer conjeturas bien definidas y fundadas de algún modo, y no suposiciones que no comprometan cuestiones concretas ni tampoco ocurrencias sin fundamento visible.
+
+3. Someter las hipótesis a contrastación dura, no laxa.
+
+4. No declarar verdadera una hipótesis satisfactoriamente confirmada; considerarla, en el mejor de los casos, como parcialmente verdadera.
+
+5. Preguntarse por qué la respuesta es como es y no de otra manera.
+
+### *2.2. Principales metodologías en la ciencia de datos*
+
+Por su amplio uso, destacan tres metodologías:
+
+1. Obtención de conocimiento en bases de datos (en inglés Knowledge Discovery in Databases, KDD), propuesta por Fayyad et al. (1996) e inspirada en un trabajo previo de Brachman & Anand (1994), fue la primera metodología aceptada por la comunidad científica. Se trata del primer intento serio de sistematizar el proceso conocido hoy día como ciencia de datos y en aquellos tiempos como conocimiento basado en bases de datos, pues se centraba en la minería de datos.
+
+2. SEMMA, acrónimo que coincide con las etapas de las que consta (en inglés, Sample, Explore, Modify, Model and Assess) fue desarrollada y mantenida por el Instituto SAS en 2012. Se define como el proceso de selección, exploración y modelización de grandes bases de datos para descubrir patrones de negocio desconocidos.
+
+3. CRISP-DM, acrónimo en inglés de Cross Industry Standard Process for Data Mining, planteada inicialmente en 1996, publicada formalmente en Chapman et al. (2000) y mantenida durante varios años por la compañía SPSS, posteriormente adquirida por IBM, que se ha encargado de mantenerla y refinarla hasta la actualidad. Esta metodología define una secuencia flexible de seis fases que permiten la construcción e implementación de un modelo de minería de datos para ser utilizado en un entorno real, que contribuya a respaldar la toma de decisiones de negocio. Se considera la metodología más utilizada en la actualidad (Azevedo & Santos, 2008; Shafique & Qaiser, 2014, entre otros) y se describe en la siguiente sección.
+
+### *2.3. CRISP-DM para ciencia de datos*
+
+*1. Entendimiento del negocio. Fundamental para el éxito del mismo. Consta de cuatro fases:*
+
+  - Determinación de los objetivos de negocio, consensuados previamente con la organización. Es importante fijar los key performance indicators (KPI) que permitan medir fidedignamente el grado de consecución de dichos objetivos.
+
+  - Evaluación de la situación actual. Inventariar las fuentes de datos que estarán disponibles, los recursos materiales y humanos con los que se podrá contar, los factores de riesgo y el plan de contingencia para los mismos.
+
+  - Determinación de los objetivos del proyecto, que debe alinearse con el correspondiente rendimiento de los modelos (por ejemplo, cuál debe de ser su nivel de precisión).
+
+  - Plan del proyecto, con los procesos a realizar y recursos asignados.
+
+*2. Comprensión de los datos. Consta de cuatro fases que giran en torno a los datos:*
+
+  - Recopilación, tanto de datos internos como externos a la organización. Esta fase incluye, si es necesario, la obtención de datos adicionales y el etiquetado de casos no clasificados con anterioridad.
+
+  - Descripción, especificando aspectos como la cantidad de datos disponibles, anticipando posibles problemas de rendimiento en el modelado posterior, tipología de las variables (numéricas, categóricas, booleanas, etc.), codificación de las mismas (especialmente para las categóricas), etc.
+
+  - Exploración, a tavés del análisis exploratorio de datos (AED). Esta tarea ayuda a formular hipótesis sobre los datos y dirige las posteriores etapas de preparación y modelado.
+
+  - Verificación de la calidad, detectando problemas como la existencia de valores perdidos, errores en datos (por ejemplo, tipográficos), errores de las mediciones (datos que son correctos pero que están expresados en unidades de medida incorrectas), incoherencias en la codificación (especialmente en las variables categóricas).
+
+*3. Preparación de los datos. Esta etapa del proyecto suele ser la que requiere más tiempo y esfuerzo (frecuentemente más del 70 %). Consta de cinco fases:*
+
+  - Selección: se toman decisiones sobre los casos o filas que hay que seleccionar y sobre los atributos (variables) o columnas que hay que incluir.
+
+  - Limpieza: si en la subfase de verificación de la calidad de los datos se han detectado problemas, hay que subsanarlos. Los valores perdidos se pueden excluir o interpolar; los errores en los datos se pueden corregir con algún esquema lógico o manualmente; si hubiera incoherencias en la codificación se podría llevar a cabo una recodificación que sustituyese a la codificación original.
+
+  - Construcción: a partir de los datos ya disponibles, de nuevos atributos (variables) o columnas y de nuevas filas o registros.
+
+  - Integración: necesaria para construir un concepto de negocio unificado (por ejemplo, el concepto de cliente) si se han usado diversas fuentes (tíquet de compra y registros de cliente). La fusión de columnas con algunas claves en común (join), adición de filas con las columnas en común (union), la agrupación, etc., se utilizan frecuentemente.
+
+  - Formateo: orientada a las necesidades de los modelos que se usarán posteriormente. La conversión de variables categóricas a numéricas (usando técnicas de one hot encoding) o viceversa, la normalización (usando normalizaciones min-max o z-score), etc., son tareas comunes en esta etapa.
+
+*4. Modelado: se trata de que los modelos ingieran dichos datos y aprendan de ellos, de forma automática, cómo resolver el problema de negocio planteado mediante técnicas, especialmente de machine learning. Las subfases de las que consta esta fase son:*
+
+  - Selección de técnicas de modelado, si se va a usar machine learning supervisado o no supervisado y, especifícamente, el tipo de algoritmos a usar en cada una de estas técnicas. Por supuesto, se tienen en cuenta los requisitos fijados en la primera fase, la cantidad y tipo de datos de los que se dispone, los requisitos concretos de cada modelo, etc.
+
+  - Generación de un diseño de comprobación, a través de medidas y criterios de bondad del modelo: el área bajo la curva ROC, el criterio de información de Akaike (AIC), el coeficiente de determinación lineal (R2- r cuadrado), la matriz de confusión, etc.
+
+  - Generación de modelos, que se entrenan oportunamente para seleccionar, posteriormente, el más adecuado.
+
+  - Validación del modelo, en función de los modelos generados y del plan de pruebas especificado.
+
+*5. Evaluación. Se debe comprobar que el modelo final generado cumple las expectativas de negocio especificadas en la primera fase. Hay que hacer hincapié en este aspecto ya que se suele confundir en la práctica esta fase de evaluación con la subfase de la anterior etapa de validación del modelo. Ahora la evaluación se lleva a cabo desde el punto de vista del negocio. Así, por ejemplo, cabe plantearse si con el modelo elegido se pueden alcanzar las metas de negocio especificadas y medidas con los correspondientes KPI. Tras esta evaluación de los resultados del modelo se abre un proceso de revisión que permitirá valorar si cumple las expectativas o se tiene que volver a etapas anteriores.*
+
+*6. Implementación. El conocimiento obtenido con el modelado es puesto en valor en esta fase de cara a satisfacer los objetivos de negocio planteados en el proyecto. Este despliegue depende mucho del tipo de proyecto que se esté realizando, aunque generalmente incluye las actividades siguientes:*
+
+  - Planificación del despliegue: del modelado y/o del conocimiento obtenido.
+
+  - Planificación del control y del mantenimiento. Así, por ejemplo, hay que verificar que el modelo está cumpliendo con las expectativas para las que se ha desarrollado, comprobar si hay que reentrenarlo o sustituirlo por otro, etc.
+
+  - Creación del informe final: para comunicar los resultados del proyecto y los pasos siguientes.
+
+  - Revisión final del proyecto: donde se establecen las conclusiones finales y se formalizan las lecciones aprendidas para incorporarlas a futuros proyectos de ciencia de datos.
+
+## **Capítulo 3: R para ciencia de datos**
+
+R es un sistema para computación estadística: software de análisis de datos y lenguaje de programación. Ha sido ampliamente utilizado en investigación y docencia, y actualmente también en las empresas y organismos públicos. Es la evolución del trabajo de los laboratorios Bell con el lenguaje S (Venables & Ripley, 2002), llevado al mundo del software libre por Ross Ihaka y Robert Gentleman en los años 90 (Ihaka & Gentleman, 1996). La version R 1.0.0 se publicó el 29 de febrero de 2000.
+
+En esta parte menciona las ventajas de usar RStudio, que de igual forma tratará en los otros capítulos. 
+
+Del 3.1. al 3.4. habla de una introducción y la instalación de R
+
+### **3.5. Tratamiento de datos con R**
+
+#### *3.5.1. Estructuras y tipos de datos*
+
+- **Tablas de datos (data.frame):** Son colecciones de variables numéricas y/o atributos organizadas en columnas, en las que cada fila se corresponde con algún elemento en el que se han observado las características que representan las variables. Cada columna del data.frame es, en realidad, otra estructura de datos, en concreto, un vector.
+
+Ejemplo:
+```{r}
+head(tempmin_data, 3)
+```
+
+Un data.frame es un objeto de datos en dos dimensiones, en el que las filas son la dimensión 1 y las columnas la dimensión 2. Los datos se pueden “extraer” de un data.frame por filas, por columnas o por celdas.
+
+Si queremos extraer una de las variables de nuestro data.frame:
+
+```{r}
+temp_min <- tempmin_data$tmin  
+#aquí guardamos todas las filas de la variable temperatura mínima
+```
+
+- **Vectores y matrices:** Ya se ha visto que una columna de una tabla de datos es un vector. También se pueden crear vectores con la función c() y los elementos del vector separados por comas. Una matriz es un vector organizado en filas y columnas.
+
+A modo de ejemplo, la primera de las siguientes expresiones crea un vector llamado nombres con dos cadenas de texto, y la segunda crea una matriz numérica llamada coordenadas a partir de las columnas 4 y 5 del conjunto de datos tempmin_data.
+
+```{r}
+nombres <- c("longitud", "latitud")
+coordenadas <- as.matrix(tempmin_data[, 4:5])
+```
+
+- **Factor:** Es un tipo especial de vector para representar variables categóricas (también denominadas atributos o factores). En general, una variable categórica suele tomar un número reducido de valores diferentes (categorías), identificados con etiquetas (labels) y que se llaman niveles del factor (levels).
+
+Un ejemplo es el dataset dp_entr del paquete CDR que se analiza en el Cap. 24. La columna ind_pro11 es un indicador que toma los valores S y N, mientras que des_nivel_edu toma tres posibles valores.
+
+```{r}
+dp_entr[1:5, c(1, 17)]
+```
+
+```{r}
+levels(dp_entr$des_nivel_edu)
+```
+
+- **Listas:** Son estructuras de datos que contienen una colección de elementos indexados que, además, pueden tener un nombre. Pueden ser heterogéneas, en el sentido de que cada elemento de la lista puede ser de cualquier tipo.
+
+```{r}
+names(tempmax_data)
+```
+
+- **Fechas:** Son un tipo de datos especial que algunas veces provoca problemas al compartir datos entre programas. El conjunto de datos tempmin_data contiene la columna fecha, que puede convertirse de manera inmediata a tipo fecha (Date) porque viene en un formato estándar (véase la ayuda de strptime para especificar otros formatos). El paquete lubridate del tidyverse contiene funciones para hacer más fácil el trabajo con fechas.
+
+```{r}
+tempmin_data$fecha<- as.Date(tempmin_data$fecha)
+class(tempmin_data$fecha)
+```
+
+- **Cadena de texto:** Son estructuras de datos que aparecen en forma de vector de caracteres. La columna indicativo del conjunto de datos tempmin_data es un ejemplo de este tipo de datos.
+
+```{r}
+head(tempmin_data$indicativo)
+```
+
+#### *3.5.2. Importación de datos*
+
+Recordar que también resulta bueno importar con "rio", es el paquete más efectivo
+
+- **Excel:** Hay varios paquetes con los que se puede trabajar con archivos de Excel. En este libro se utiliza el paquete readxl del tidyverse.
+
+```{r}
+download.file(url = "http://emilio.lcano.com/b/adr/p/datos/RRHH.xlsx",
+              destfile = "data/RRHH.xlsx",
+              mode = "wb")
+```
+
+Una vez el archivo está en el directorio de trabajo de la sesión de R, se puede importar su contenido al espacio de trabajo con la siguiente expresión:
+
+```{r}
+rrhh <- readxl::read_excel("data/RRHH.xlsx")  #aquí me pide crear una carpeta llamada data
+```
+
+- **Texto:** Los archivos de texto son el formato más utilizado y conveniente para compartir datos. Es también muy común que el equipamiento o el software genere datos en formato de texto. Estos archivos suelen tener extensión .csv (comma separated values) o .txt
+
+```{r}
+download.file(url = "http://emilio.lcano.com/b/adr/p/datos/ejDatos.csv",
+              destfile = "data/ejDatos.csv")
+```
+
+Se puede usar directamente las funciones read.csv() o read.csv2() para tener la tabla de datos en el espacio de trabajo.
+
+```{r}
+merma <- read.csv2("data/ejDatos.csv")
+```
+
+```{r}
+merma <- read.table(file = "data/ejDatos.csv",
+                    header = TRUE,
+                    sep = ";",
+                    dec = ",",
+                    fileEncoding = "utf-8")
+```
+
+- **Webscraping:** El paquete rvest, que forma parte del tidyverse, se puede utilizar para obtener datos de páginas web y otras fuentes de Internet, lo que se suele llamar web scraping. Por ejemplo, supóngase que se quiere importar la tabla con los datos de comunidades y ciudades autónomas españolas del enlace: https://www.ine.es/daco/daco42/codmun/cod_ccaa_provincia.htm
+
+```{r}
+library("rvest")
+url <- "https://www.ine.es/daco/daco42/codmun/cod_ccaa_provincia.htm"
+ccaa_ine <- url |> 
+  read_html() |> 
+  html_node(xpath = '//*[@id="contieneHtml"]/table') |> 
+  html_table(fill = TRUE)
+```
+
+#### *3.5.3. Exportación de datos y archivos de datos específicos de R*
+
+Vamos a guardar en nuestra compu las bases de datos editadas que tenemos por ejemplo
+
+- **Formato Excel**
+
+Esta función exporta la tabla de datos "tempin_data" a Excel y csv
+```{r}
+openxlsx::write.xlsx(x = tempmin_data, 
+                     file = "data/temp_min_Filomena.csv") #acá la nombramos
+write.csv(x = tempmin_data, file = "data/temp_min_Filomena.csv")
+```
+
+- **Formato nativo de R (.RData)**
+
+Estos archivos almacenan un espacio de trabajo entero y por tanto pueden guardar varios objetos en el mismo archivo. Cuando se importe posteriormente, los objetos estarán en el espacio de trabajo con su nombre original. Se  guarda de la siguiente forma:
+
+```{r}
+save(tempmin_data, tempmax_data, #se guarda con la función save
+     file = "data/datos_temperaturas.RData")
+load("data/datos_temperaturas.RData") #carga de nuevo el objeto / se restaura con la función load
+```
+
+- **Formato .rds**
+
+Estos archivos almacenan un único objeto en un archibo. Cuando posteriormente se quierean importar, hay que asignar el resultado al nombre que se quiera. Se guardan con la función writeRDS() y se restauran con la función readRDS()
+
+```{r}
+saveRDS(object = tempmin_data, 
+        file = "data/datos_temperaturas.rds")
+nuevo_objeto <- readRDS(file = "data/datos_temperaturas.rds")
+```
+
+### **3.6. Tratamiento de datos con R**
+
+#### 3.6.1 El Tidyverse y su flujo de trabajo
+
+Es un conjunto de paquetes de R diseñados para ciencia de datos. Tiene 3 ventajas: (1) Utiliza gramáticas, estructuras de datos y filosofía de diseño común. (2) El flujo de trabajo es más fluido y, una vez se comprende las ideas principales, más intuitivo. (3) Para la mayoría de operaciones es computacionalmente más eficiente.
+
+Uno de los paquetes más importantes es ggplot2
+
+Al utilizar las funciones del tidyverse, los datos se organizan en objetos de clase tibble, que es una extensión del data.frame de R base.
+
+Se puede forzar a que una tabla de datos sea de un tipo u otro con las funciones as.data.frame (de tibble a data.frame) y as_tibble (de data.frame a tibble).
+
+Una de las características de la forma en que están programados los paquetes del tidyverse es que se puede trabajar13 con pipes. El **pipe** es, básicamente, un operador compuesto de dos caracteres, |>, que se puede obtener con el atajo de teclado CTRL+MAYUS+M. El operador se pone en medio de dos expresiones de R, sean lado_izquierdo y lado_derecho las expresiones que se ponen a izquierda y derecha del pipe. Entonces se utiliza de la siguiente manera:
+
+```{r}
+#lado_izquierdo |> lado_derecho
+```
+
+**Nota**
+El operador nativo de R, |>, apareció en la versión R-4.1.0. Hay un operador alternativo que proviene del paquete magrittr, **%>%**, que había que usar antes de esta versión, y mucha literatura y documentación está escrita usándolo. Hay diferencias, pero a los efectos de este capítulo ambos operadores se pueden utilizar indistintamente.
+
+**Ejemplo de uso**
+La expresión lado_izquierdo debe producir un valor, que puede ser cualquier objeto de R. La expresión lado_derecho debe ser una función, que tomará como primer argumento el valor producido en la parte izquierda. Si se desea guardar el resultado final, se debe asignar el resultado a algún nombre de objeto para que se almacene en el espacio de trabajo. La siguiente expresión sería un ejemplo de uso.
+
+```{r}
+#nombre_objeto <- lado_izquierdo |>
+  #lado_derecho
+```
+
+La ventaja de usar los pipes es que se pueden encadenar, de forma que el resultado de cada operación pasa a la siguiente expresión del pipeline (secuencia de operaciones con pipe), como en el siguiente ejemplo:
+
+```{r}
+library("dplyr")
+contam_mad |> colnames() |> length()
+#> [1] 12
+```
+#### *3.6.2 Transformar datos con dplyr*
+
+Dentro del paquete dplyr se dispone de una serie de “verbos” (funciones) para una sola tabla, que se pueden agrupar en tres categorías: para trabajar con filas, para trabajar con columnas y para resumir datos.
+
+##### 3.6.2.1. Operaciones con filas
+
+- **filter()**: elige filas en función de los valores de la columna
+
+```{r}
+pm10 <- contam_mad |> 
+  filter(nom_abv == "PM10")   # se filtra por PM10
+```
+
+- **arrange()**: cambia el orden de las filas con algún criterio
+
+```{r}
+zonas<- contam_mad |>
+  arrange(desc(zona), daily_mean)
+```
+
+- **slice()**: extrae filas por su índice. También hay una serie de funciones "asistentes" (helpers) para obtener los índices que se utilizan con frecuencia. Por ejemplo:
+
+1. slice_head() y slice_tail(): obtienen las primas y últimas filas respectivamente (por defecto, una). Se puede especificar n (número) o prop (proporción de filas)
+
+2. slice_sample(): obtiene una muestra aleatoria de n filas (o proporción prop)
+
+3. slice_min(), slice_max(): obtienen las filas que contienen los menores o mayores valores respectivamente de la variable indicada en el argumento order_by. Si no se especifica n o prop, se obtienen solo las filas que conotienen el mínimo o máximo. Puede haber más de una fila que cumpla la condición
+
+Ejemplo:
+```{r}
+pm10 |> slice(10:15) # extrae filas desde la 10 a la 15
+pm10 |> slice_tail(n = 3) # extrae las tres últimas filas
+pm10 |> slice_max(order_by = daily_mean) # día con mayor valor medio de PM10
+set.seed(1) # Para que la muestra aleatoria sea reproducible
+pm10 |> slice_sample(n = 4) # muestra 4 registros
+```
+
+##### 3.6.2.2. Operaciones con columnas
+
+Verbos para estas operaciones:
+
+- **select()**: indica cuando una columna se incluye o no. Se pueden utilizar helpers para seleccionar columnas que cumplan cierta condición (por ejemplo, ser numéricas) y también para "quitar" columnas de la selección (con el signo menos, [-])
+
+```{r}
+#pm10 |> select(longitud, latitud, daily_mean, tipo)
+#pm10 |> select(where(is.numeric))
+#pm10 |> select(-c(id:latitud))
+```
+
+En cuanto a la **modificación** de datos, existen múltiples posibilidades. Algunas de ellas son:
+
+- **rename()**: cambia el nombre de la columna
+
+- **mutate()**: cambia los valores de las columnas y crea nuevas columnas. La función transmute() funciona igual que mutate(), pero la tabla de datos resultante solo contiene las nuevas columnas creadas. 
+
+- **relocate()**: cambia el orden de las columnas
+
+```{r}
+#pm10 |> rename(zona_calidad_aire = zona)
+#pm10 |> relocate(fecha, .before = estaciones)
+#pm10_na <- pm10 |> mutate(isna = is.na(daily_mean))
+```
+
+En este punto, es importante señalar que dentro de la función mutate() se puede usar cualquier función vectorizada para transformar las variables. Por ejemplo, se podría transformar una columna con las funciones as.xxx que se vieron en la Sec. 3.5.1, aplicar formatos a fechas o usar funciones del paquete lubridate para trabajar con este tipo de datos. A medida que se avance en el libro irán apareciendo aplicaciones que ahora, quizás, no sean tan evidentes.
+
+##### 3.6.2.3. Operaciones de resumen y agrupación
+
+La primera operación de resumen que puede surgir es “contar” filas. La función tally() devuelve el número de filas totales de un data.frame. La función count() proporciona también este número; si, además, se pasa como argumento alguna variable, lo que devuelve es el número de filas para cada valor diferente de dicha/s variable/s. Estos recuentos se pueden añadir a la tabla de datos con las funciones add_count() y add_tally(), lo que permite calcular frecuencias absolutas y relativas fácilmente.
+
+```{r}
+pm10 |> tally()
+```
+
+```{r}
+pm10 |> count(zona)
+```
+
+La función summarise() (o, equivalentemente, summarize()) aplica alguna función de resumen a la/s variable/s que se especifiquen (mean(), max(), etc.). El paquete dplyr tiene algunas funciones de resumen adicionales, como n() (número de filas), n_distinct() (número de filas con valores distintos) y first(), last(), nth() (primero, último y n-ésimo valor, en el orden en el que se encuentran, respectivamente).
+
+En muchas ocasiones, las operaciones de análisis se realizan en grupos definidos por alguna variable de agrupación. La función group_by() “prepara” la tabla de datos para realizar operaciones de este tipo. Una vez agrupados los datos, se pueden añadir operaciones de resumen como las vistas anteriormente. A veces hay que “desagrupar” los datos, para lo que se utiliza la función ungroup().
+
+A continuación, se muestra una expresión un poco más compleja que las anteriores. En el conjunto de datos contam_mad del paquete CDR, se filtra por el nombre de contaminante “NOx”. Después se agrupan los datos por zona y se calculan algunos estadísticos de resumen para cada zona.
+
+```{r}
+contam_mad |>  
+  filter(nom_abv == "NOx") |> # se filtra por N0x
+  group_by(zona) |>
+  summarize(
+    min = min(daily_mean, na.rm = TRUE),
+    q1 = quantile(daily_mean, 0.25, na.rm = TRUE),
+    median = median(daily_mean, na.rm = TRUE),
+    mean = mean(daily_mean, na.rm = TRUE),
+    q3 = quantile(daily_mean, 0.75, na.rm = TRUE),
+    max = max(daily_mean, na.rm = TRUE)
+  )
+```
+
+#### 3.6.3 Combinación de datos
+
+En el apartado anterior se han tratado los “verbos” de una tabla. Es muy común que haya que combinar datos de distintas tablas, para lo cual se utilizan lo que el tidyverse considera two tables verbs. En esencia, para combinar tablas que contienen información relacionada, hay que saber cuáles son las columnas que se refieren a lo mismo, para hacer las uniones (joins) utilizando esas columnas. Hay cuatro tipos de uniones que se pueden realizar, usando las siguientes funciones:
+
+- **inner_join()**: se incluyen las filas de ambas tablas para las que coinciden las variables de unión
+
+- **left_join()**: se incluyen todas las filas de la primera tabala y solo las de la segunda donde hay coincidencias
+
+- **right_join()**: se incluyen todas las filas de la segunda tabla y solo las de la primera donde hay coincidencias
+
+- **full_join()**: se incluyen todas las filas de las dos tablas
+
+Las funciones requieren como argumentos dos tablas de datos y la especificación de las columnas coincidentes. Si no se especifica, hace las uniones por todas las columnas coincidentes en ambas tablas. Para las filas que solo están en una de las tablas, se añaden valores NA donde no haya coincidencias.
+
+A modo de ejemplo, las siguientes expresiones unen dos datasets para combinar datos de municipios con su renta. En el Cap. 8 se verán estas uniones en la práctica.
+
+```{r}
+library("sf")
+munis_renta <- municipios |>
+  left_join(renta_municipio_data) |> 
+  select(name, cpro, cmun, `2019`) 
+#> Joining, by = "codigo_ine"
+```
+
+Otra forma de unir tablas es, simplemente, añadiendo columnas (que tengan el mismo número de filas) o filas (que tengan el mismo número de columnas). Para ello se usan las funciones bind_cols() y bind_rows(), respectivamente. Otra forma conveniente de añadir nuevas filas o columnas son las funciones add_row() y add_column(). Se pueden añadir antes o después de una fila/columna especificada con el argumento .before, y pasando los valores como pares “variable = valor” para cada variable en el conjunto de datos.
+
+Como comentario final del paquete dplyr, una característica importante es que se pueden usar las funciones vistas sobre tablas de una base de datos, sin necesidad de utilizar sentencias SQL y con la ventaja de que las operaciones se realizan en el motor de la base de datos. En el Cap. 5 se tratarán las cuestiones relacionadas con los gestores de bases de datos y SQL.
+
+#### 3.6.4 Reorganización de datos
+
+Para estas operaciones se utilizan las funciones pivot_longer() y pivot_wider() del paquete tidyr del tidyverse de la siguiente forma:
+
+- **pivot_longer()**: el argumento names_to asigna el nombre de la nueva variable que va a indicar de qué columna vienen los datos; y el argumento values_to asigna el nombre de la nueva variable que va a contener el valor de la tabla original
+
+- **pivot_wider()**: el argumento names_from indica el nombre de la variable que contiene los nombres de las nuevas columnas a crear a lo ancho; y el argumento values_From indica el nombre de la variable que contiene los valores en la tabla original. Las observaciones deben estar identificadas de forma única por varias variables. Si no es el caso, se puede aplicar una función al estilo de las tablas dinámicas de las hojas de cálculo con el argumento values_fn
+
+
+**Nota**
+Las funciones pivot_longer() y pivot_wider() admiten otros argumentos names_xx y values_xx para personalizar la forma de reestructurar los datos. En la mayoría de las ocasiones será suficiente con las comentadas (xx_from y xx_to). Si fuera necesario, se recomienda consultar la ayuda de las funciones, o la lectura del artículo sobre pivoting.
+
+A modo de ejemplo, el conjunto de datos contam_mad tiene los datos “mezclados” de varias variables medioambientales en la columna daily_mean. La columna nom_abv contiene el parámetro al que se refiere la columna de datos. Entonces, interesa “extender” la tabla para tener cada parámetro en una columna, de forma que se pueda hacer un análisis de datos adecuado, como en el siguiente código:
+
+```{r}
+library("tidyr")
+extendida <- contam_mad |>
+  pivot_wider(names_from = "nom_abv",
+              values_from = "daily_mean",
+              values_fn = mean)
+colnames(extendida)
+```
+
+Se deja como ejercicio volver a obtener la tabla original usando la función pivot_longer() a partir del objeto extendida.
+
+El paquete tidyr también contiene funciones para reorganizar las columnas de la tabla uniendo columnas con la función unite(), o separando una columna en dos o más con la función separate() (véanse los detalles en la ayuda de las funciones).
+
+Para terminar este apartado de reorganización de datos, se da una primera aproximación al tratamiento de valores perdidos, que se abordará en el Cap. 8. En R, un valor perdido se representa por el valor especial NA (not available). Brevemente, las funciones más utilizadas en este campo son:
+
+- **drop_na()** del paquete tidyr: permite eliminar las filas que tienen valores perdidos en ciertas variables (o en cualquiera, si no se especifica ninguna).
+
+- **replace_na()**: sustituye los valores perdidos en cada variable por el valor especificado.
+
+- **fill()**: permite “rellenar” valores perdidos con los últimos encontrados.
+
+Los datos de contaminación a menudo tienen muchos valores perdidos. La siguiente expresión elimina las filas del conjunto de datos contam_mad con valores perdidos y, después, cuenta las filas.
+
+```{r}
+contam_mad |>  
+  drop_na() |> # se omiten los NAs para el análisis
+  count()
+```
+
